@@ -1,4 +1,5 @@
 import csv
+from logger import log_info, log_error
 
 input_file = "sales_data.csv"
 output_file = "sales_summary.txt"
@@ -6,22 +7,34 @@ output_file = "sales_summary.txt"
 total_sales = 0
 total_items = 0
 
-with open(input_file, newline="") as file:
-    reader = csv.DictReader(file)
+try:
 
-    for row in reader:
-        quantity = int(row["Quantity"])
-        price = int(row["Price"])
+    with open(input_file, newline="") as file:
+        reader = csv.DictReader(file)
 
-        sale = quantity * price
+        for row in reader:
 
-        total_sales += sale
-        total_items += quantity
+            quantity = int(row["Quantity"])
+            price = int(row["Price"])
 
-with open(output_file, "w") as file:
-    file.write("Sales Summary\n")
-    file.write("----------------\n")
-    file.write(f"Total Items Sold: {total_items}\n")
-    file.write(f"Total Sales Amount: ${total_sales}\n")
+            sale = quantity * price
 
-print("Report generated successfully")
+            total_sales += sale
+            total_items += quantity
+
+    with open(output_file, "w") as file:
+
+        file.write("Sales Summary\n")
+        file.write("----------------\n")
+        file.write(f"Total Items Sold: {total_items}\n")
+        file.write(f"Total Sales Amount: ${total_sales}\n")
+
+    log_info("Report generated successfully")
+
+    print("Report generated successfully")
+
+except Exception as error:
+
+    log_error(str(error))
+
+    print("Error occurred:", error)
