@@ -1,0 +1,4 @@
+Sales Summary
+----------------
+Total Items Sold: 8
+Total Sales Amount: $1750
